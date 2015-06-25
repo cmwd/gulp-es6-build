@@ -34,7 +34,7 @@ export default class JavascriptBuild {
 
     bundle() {
         this.bundler.bundle()
-          .on('error', (err) => { console.error(err); this.emit('end'); })
+          .on('error', function (err) { console.error(err); this.emit('end'); })
           .pipe(source(this.fileName))
           .pipe(buffer())
           .pipe(sourcemaps.init({ loadMaps: true }))
