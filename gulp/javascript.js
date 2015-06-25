@@ -27,7 +27,6 @@ export default class JavascriptBuild {
         this.bundler = watchify( browserify(this.src, opts).transform(babel) );
 
         if (watch) {
-            console.log(watch);
             this.watch();
         }
 
