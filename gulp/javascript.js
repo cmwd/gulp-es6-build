@@ -25,27 +25,31 @@ export default class JavascriptBuild {
         }
 
         this.bundler = watchify( browserify(this.src, opts).transform(babel) );
-        this.bundle();
 
         if (watch) {
-          this.watch();
+            console.log(watch);
+            this.watch();
         }
+
+        this.bundle();
     }
 
     bundle() {
         this.bundler.bundle()
-          .on('error', function (err) { console.error(err); this.emit('end'); })
-          .pipe(source(this.fileName))
-          .pipe(buffer())
-          .pipe(sourcemaps.init({ loadMaps: true }))
-          .pipe(sourcemaps.write('./'))
-          .pipe(gulp.dest(this.dest));
+            .on('error', function (err) { 
+                console.error(err); 
+                this.emit('end'); })
+            .pipe(source(this.fileName))
+            .pipe(buffer())
+            .pipe(sourcemaps.init({ loadMaps: true }))
+            .pipe(sourcemaps.write('./'))
+            .pipe(gulp.dest(this.dest));
     }
 
     watch() {
-        this.bundler.on('update', function() {
-          console.log('-> bundling...');
-          this.bundle();
+        this.bundler.on('update', () => {
+            console.log('-> bundling...');
+            this.bundle();
         });
     }
 }
