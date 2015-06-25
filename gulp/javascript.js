@@ -26,6 +26,10 @@ export default class JavascriptBuild {
 
         this.bundler = watchify( browserify(this.src, opts).transform(babel) );
         this.bundle();
+
+        if (watch) {
+          this.watch();
+        }
     }
 
     bundle() {
@@ -41,7 +45,7 @@ export default class JavascriptBuild {
     watch() {
         this.bundler.on('update', function() {
           console.log('-> bundling...');
-          this.rebundle();
+          this.bundle();
         });
     }
 }
